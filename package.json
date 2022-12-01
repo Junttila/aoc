@@ -1,0 +1,28 @@
+{
+  "name": "aoc-2022-junttila",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon -r source-map-support/register dist/index.js",
+    "debug": "node -r source-map-support/register dist/index.js"
+  },
+  "keywords": [],
+  "author": "Junttila",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.11.12",
+    "@typescript-eslint/parser": "^4.29.0",
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "prettier-eslint": "^13.0.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "dotenv": "^16.0.3"
+  }
+}
