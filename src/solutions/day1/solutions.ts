@@ -1,17 +1,4 @@
-const example = `1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000`.split('\n');
+import { splitArray } from '../scripts/splitArray';
 
 const solutions: Array<(lines: string[]) => string | number> = [
   // Solution part 1
@@ -30,19 +17,5 @@ const solutions: Array<(lines: string[]) => string | number> = [
     return sort[0] + sort[1] + sort[2];
   },
 ];
-
-function splitArray<T>(a: T[], s: T): T[][] {
-  let temp: T[] = [];
-  const result: T[][] = [];
-  a.forEach((v) => {
-    if (v !== s) {
-      temp.push(v);
-    } else {
-      result.push(temp);
-      temp = [];
-    }
-  });
-  return result;
-}
 
 export default solutions;
