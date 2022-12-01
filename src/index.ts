@@ -37,7 +37,9 @@ try {
     });
     if (result.status === 200) {
       fs.writeFile(INPUT_FILE_NAME, await result.text(), (a) => {
-        throw a;
+        if (a !== null) {
+          throw a;
+        }
       });
     }
     if (result.status === 404) {
