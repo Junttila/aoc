@@ -11,9 +11,8 @@ const EXAMPLE = false;
 const YEAR = 2022;
 const DAY = 2;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
-const INPUT_FILE_NAME = `src/solutions/day${DAY}/${
-  EXAMPLE ? 'example' : 'input'
-}.txt`;
+const EXAMPLE_FILE_NAME = `src/solutions/day${DAY}/example.txt`;
+const INPUT_FILE_NAME = `src/solutions/day${DAY}/input.txt`;
 const AOC_SESSION = env.AOC_SESSION || '';
 let currentFile;
 if (!EXAMPLE) {
@@ -32,29 +31,29 @@ if (!EXAMPLE) {
   }
 }
 (async () => {
-  if (!EXAMPLE) {
-    if (!currentFile) {
-      console.log('Input file empty!');
-      console.log('Fetching data for year', YEAR, 'day', DAY);
-      const result = await fetch(AOC_INPUT_URI, {
-        headers: {
-          cookie: `session=${AOC_SESSION}`,
-        },
+  if (!currentFile) {
+    console.log('Input file empty!');
+    console.log('Fetching data for year', YEAR, 'day', DAY);
+    const result = await fetch(AOC_INPUT_URI, {
+      headers: {
+        cookie: `session=${AOC_SESSION}`,
+      },
+    });
+    if (result.status === 200) {
+      fs.writeFile(INPUT_FILE_NAME, await result.text(), (a) => {
+        if (a !== null) {
+          throw a;
+        }
       });
-      if (result.status === 200) {
-        fs.writeFile(INPUT_FILE_NAME, await result.text(), (a) => {
-          if (a !== null) {
-            throw a;
-          }
-        });
-      }
-      if (result.status === 404) {
-        console.log(`404 returned, day ${DAY} not started?`);
-      }
+    }
+    if (result.status === 404) {
+      console.log(`404 returned, day ${DAY} not started?`);
     }
   }
 
   const inputAsLines = fileToArray(INPUT_FILE_NAME);
+  const exampleAsLines = fileToArray(EXAMPLE_FILE_NAME);
+  const exampleEmpty = exampleAsLines[0].length < 1;
   console.log('Start day', DAY);
   if (inputAsLines[0].length < 1) {
     console.log('File empty, exiting');
@@ -65,12 +64,24 @@ if (!EXAMPLE) {
     const before = new Date();
     const result = f(inputAsLines);
     const after = new Date();
+
+    const exampleBefore = new Date();
+    const exampleResult = exampleEmpty
+      ? 'Example file empty'
+      : f(exampleAsLines);
+    const exampleAfter = new Date();
+
+    console.log('Solution', (i + 1).toString());
     console.log(
-      'Solution',
-      (i + 1).toString(),
+      'Example result:',
+      exampleResult || '',
+      `(${exampleAfter.valueOf() - exampleBefore.valueOf()}ms)`,
+    );
+    console.log(
+      'Result:',
+      result || '',
       `(${after.valueOf() - before.valueOf()}ms)`,
     );
-    console.log(result || '');
     console.log();
   });
 })();
