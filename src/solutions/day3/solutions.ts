@@ -10,10 +10,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
     );
 
     return bps
-      .map((v, i) => {
-        if (!commonItem(v)) {
-          console.log('no common item in backpack number', i, v);
-        }
+      .map((v) => {
         return itemPriority(commonItem(v));
       })
       .reduce((a, v) => a + v, 0);
