@@ -7,29 +7,28 @@ import path from 'node:path';
 import fetch from 'cross-fetch';
 import { env } from 'process';
 
-const EXAMPLE = false;
 const YEAR = 2022;
-const DAY = 2;
+const DAY = 3;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
 const EXAMPLE_FILE_NAME = `src/solutions/day${DAY}/example.txt`;
 const INPUT_FILE_NAME = `src/solutions/day${DAY}/input.txt`;
 const AOC_SESSION = env.AOC_SESSION || '';
 let currentFile;
-if (!EXAMPLE) {
-  try {
-    currentFile = fs.readFileSync(
-      path.resolve(filePathForJS(INPUT_FILE_NAME)),
-      'utf8',
-    );
-  } catch (e) {
-    console.log("Couldn't read file, touching", INPUT_FILE_NAME);
-    fs.writeFile(INPUT_FILE_NAME, '', (a) => {
-      if (a !== null) {
-        throw a;
-      }
-    });
-  }
+
+try {
+  currentFile = fs.readFileSync(
+    path.resolve(filePathForJS(INPUT_FILE_NAME)),
+    'utf8',
+  );
+} catch (e) {
+  console.log("Couldn't read file, touching", INPUT_FILE_NAME);
+  fs.writeFile(INPUT_FILE_NAME, '', (a) => {
+    if (a !== null) {
+      throw a;
+    }
+  });
 }
+
 (async () => {
   if (!currentFile) {
     console.log('Input file empty!');
