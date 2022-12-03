@@ -8,8 +8,6 @@ const solutions: Array<(lines: string[]) => string | number> = [
           c2: v.substring(v.length / 2, v.length).split(''),
         } as Backpack),
     );
-    // console.log(bps[0]);
-    // console.log(commonItem(bps[0]));
 
     return bps
       .map((v, i) => {
@@ -25,7 +23,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
     const bps: Backpack2[] = [];
     let temp: string[] = [];
 
-    lines.forEach((v, i) => {
+    lines.forEach((v) => {
       temp.push(v);
       if (temp.length >= 3) {
         bps.push({
