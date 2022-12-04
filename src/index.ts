@@ -8,7 +8,7 @@ import fetch from 'cross-fetch';
 import { env } from 'process';
 
 const YEAR = 2022;
-const DAY = 3;
+const DAY = 4;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
 const EXAMPLE_FILE_NAME = `src/solutions/day${DAY}/example.txt`;
 const INPUT_FILE_NAME = `src/solutions/day${DAY}/input.txt`;
