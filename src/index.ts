@@ -8,7 +8,7 @@ import fetch from 'cross-fetch';
 import { env } from 'process';
 
 const YEAR = 2022;
-const DAY = 5;
+const DAY = 6;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
 const EXAMPLE_FILE_NAME = `src/solutions/day${DAY}/example.txt`;
 const INPUT_FILE_NAME = `src/solutions/day${DAY}/input.txt`;
@@ -57,7 +57,7 @@ try {
   const exampleAsLines = fileToArray(EXAMPLE_FILE_NAME);
   const exampleEmpty = exampleAsLines[0].length < 1;
   console.log('Start day', DAY);
-  if (inputAsLines[0].length < 1) {
+  if (inputAsLines[0]?.length < 1) {
     console.log('File empty, exiting');
     return;
   }
