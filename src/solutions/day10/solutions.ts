@@ -27,8 +27,6 @@ const solutions: Array<(lines: string[]) => string | number> = [
       signalStrengths = result[result.length - 1].signalStrengths;
     }
 
-    // console.log(result.at(-1));
-
     return Array.from(signalStrengths.values()).reduce((a, v) => a + v, 0);
   },
   // Solution part 2
@@ -63,7 +61,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
 
     drawImage(result[result.length - 1].drawing!);
 
-    return 'See above';
+    return '\n' + drawImage(result[result.length - 1].drawing!);
   },
 ];
 
@@ -85,33 +83,18 @@ function runInstr(
   let newPC = pc + 1;
   let newX = x;
   if ((newPC + offset) % 40 === 0) {
-    // console.log(
-    //   'setting signal strength at',
-    //   newPC,
-    //   'with',
-    //   x,
-    //   'to',
-    //   newX * newPC,
-    // );
     signalStrengths.set(newPC, newX * newPC);
   }
+
   drawing?.set(newPC, draw(newPC, newX));
+
   if (instr.command === 'addx') {
     newPC++;
     if ((newPC + offset) % 40 === 0) {
-      // console.log(
-      //   'setting signal strength at',
-      //   newPC,
-      //   'with',
-      //   x,
-      //   'to',
-      //   newX * newPC,
-      // );
       signalStrengths.set(newPC, newX * newPC);
     }
     drawing?.set(newPC, draw(newPC, newX));
     newX += instr.arg || 0;
-    // console.log('adding to x', instr.arg, 'resulting', newX);
   }
   return {
     x: newX,
@@ -126,17 +109,19 @@ function draw(cycle: number, sprite: number) {
 }
 
 function drawImage(drawing: Map<number, boolean>) {
+  let lines: string = '';
   let line = '';
   for (let i = 0; i < Array.from(drawing.values()).length; i++) {
     const element = Array.from(drawing.values())[i];
 
-    if (i % 40 === 0) {
-      console.log(line);
+    if (i % 40 === 0 && line !== '') {
+      lines += line + '\n';
       line = '';
     }
     line = line + (element ? '#' : '.');
   }
-  console.log(line);
+  lines += line;
+  return lines;
 }
 
 export default solutions;
