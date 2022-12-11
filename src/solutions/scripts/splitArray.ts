@@ -9,5 +9,7 @@ export function splitArray<T>(a: T[], s: T): T[][] {
       temp = [];
     }
   });
+
+  result.push(temp);
   return result;
 }
