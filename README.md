@@ -1,9 +1,9 @@
-# Advent of Code 2022
+# Advent of Code
 Edit `YEAR` and `DAY` constants in `index.ts` to run selected solution.
 
 Tries to download selected days input into `src/solutions/day{DAY}/input.txt`
 
-# Results
+# Results 2022
 ```log
 Start day 1
 Solution 1

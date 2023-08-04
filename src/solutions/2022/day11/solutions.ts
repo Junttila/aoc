@@ -1,9 +1,9 @@
-import { splitArray } from '../scripts/splitArray';
+import { splitArray } from "../../scripts/splitArray";
 
 const solutions: Array<(lines: string[]) => string | number> = [
   // Solution part 1
   (lines: string[]) => {
-    const textMonkeys = splitArray(lines, '');
+    const textMonkeys = splitArray(lines, "");
 
     const monkeys: Monkey[] = textMonkeys.map(constructMonkey);
 
@@ -26,7 +26,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    const textMonkeys = splitArray(lines, '');
+    const textMonkeys = splitArray(lines, "");
 
     const monkeys: Monkey[] = textMonkeys.map(constructMonkey);
     const commonDenominator = monkeys.reduce((a, v) => a * v.divBy, 1);
@@ -60,22 +60,22 @@ interface Monkey {
 
 const constructMonkey = (v: string[]): Monkey => {
   const [_nameString, itemString, opString, ...testStrings] = v;
-  const opSymbols = opString.slice(23).split(' ');
-  const divBy = Number(testStrings[0].split(' ').at(-1));
-  const trueThrow = Number(testStrings[1].split(' ').at(-1));
-  const falseThrow = Number(testStrings[2].split(' ').at(-1));
+  const opSymbols = opString.slice(23).split(" ");
+  const divBy = Number(testStrings[0].split(" ").at(-1));
+  const trueThrow = Number(testStrings[1].split(" ").at(-1));
+  const falseThrow = Number(testStrings[2].split(" ").at(-1));
 
   opSymbols[0];
 
   return {
     items: itemString
       .slice(18)
-      .split(', ')
+      .split(", ")
       .map((n) => Number.parseInt(n)),
     operation:
-      opSymbols[0] === '*'
-        ? (w) => w * (opSymbols[1] === 'old' ? w : Number(opSymbols[1]))
-        : (w) => w + (opSymbols[1] === 'old' ? w : Number(opSymbols[1])),
+      opSymbols[0] === "*"
+        ? (w) => w * (opSymbols[1] === "old" ? w : Number(opSymbols[1]))
+        : (w) => w + (opSymbols[1] === "old" ? w : Number(opSymbols[1])),
     test: (w) => (w % divBy === 0 ? trueThrow : falseThrow),
     inspectCount: 0,
     divBy,

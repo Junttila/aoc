@@ -1,4 +1,4 @@
-import { range } from '../scripts/range';
+import { range } from "../../scripts/range";
 
 const solutions: Array<(lines: string[]) => string | number> = [
   // Solution part 1
@@ -6,7 +6,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
     const tailPoss = new Set<string>();
     lines.reduce(
       (a, l) => {
-        const [dir, steps] = l.split(' ') as Move;
+        const [dir, steps] = l.split(" ") as Move;
         const ropeMove = range(1, steps).reduce((a2, _v2) => {
           const newRope = move(a2, dir);
           tailPoss.add(`${newRope.tail.x},${newRope.tail.y}`);
@@ -18,7 +18,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
       {
         head: { x: 0, y: 0 },
         tail: { x: 0, y: 0 },
-      } as Rope,
+      } as Rope
     );
     return Array.from(tailPoss).length;
   },
@@ -30,8 +30,8 @@ const solutions: Array<(lines: string[]) => string | number> = [
       tail: Array.from({ length: 9 }, () => ({ x: 0, y: 0 })),
     };
     const moves: Move[] = lines.map((v) => [
-      v.split(' ')[0] as Dir,
-      Number(v.split(' ')[1]),
+      v.split(" ")[0] as Dir,
+      Number(v.split(" ")[1]),
     ]);
 
     moves.reduce((a, v) => {
@@ -67,10 +67,10 @@ interface Rope2 {
 }
 
 enum Dir {
-  U = 'U',
-  D = 'D',
-  L = 'L',
-  R = 'R',
+  U = "U",
+  D = "D",
+  L = "L",
+  R = "R",
 }
 
 function move({ head, tail }: Rope, dir: Dir) {
