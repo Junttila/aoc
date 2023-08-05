@@ -1,14 +1,16 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     return lines
-      .map((v) => {
+      .map(v => {
         const [a, b] = v.split(',');
         return Number(
           contains(
-            a.split('-').map((u) => Number.parseInt(u)),
-            b.split('-').map((u) => Number.parseInt(u)),
-          ),
+            a.split('-').map(u => Number.parseInt(u)),
+            b.split('-').map(u => Number.parseInt(u))
+          )
         );
       })
       .reduce((a, v2) => a + v2, 0);
@@ -16,13 +18,13 @@ const solutions: Array<(lines: string[]) => string | number> = [
   // Solution part 2
   (lines: string[]) => {
     return lines
-      .map((v) => {
+      .map(v => {
         const [a, b] = v.split(',');
         return Number(
           overlaps(
-            a.split('-').map((u) => Number.parseInt(u)),
-            b.split('-').map((u) => Number.parseInt(u)),
-          ),
+            a.split('-').map(u => Number.parseInt(u)),
+            b.split('-').map(u => Number.parseInt(u))
+          )
         );
       })
       .reduce((a, v2) => a + v2, 0);

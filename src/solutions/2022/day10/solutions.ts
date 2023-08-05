@@ -1,10 +1,12 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     let pc = 0;
     let x = 1;
     let signalStrengths = new Map<number, number>();
-    let result: {
+    const result: {
       x: number;
       pc: number;
       signalStrengths: Map<number, number>;
@@ -35,7 +37,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
     let x = 1;
     let signalStrengths = new Map<number, number>();
     let drawing = new Map<number, boolean>();
-    let result: {
+    const result: {
       x: number;
       pc: number;
       signalStrengths: Map<number, number>;
@@ -78,7 +80,7 @@ function runInstr(
   pc: number,
   signalStrengths: Map<number, number>,
   drawing?: Map<number, boolean>,
-  offset = 20,
+  offset = 20
 ) {
   let newPC = pc + 1;
   let newX = x;
@@ -109,7 +111,7 @@ function draw(cycle: number, sprite: number) {
 }
 
 function drawImage(drawing: Map<number, boolean>) {
-  let lines: string = '';
+  let lines = '';
   let line = '';
   for (let i = 0; i < Array.from(drawing.values()).length; i++) {
     const element = Array.from(drawing.values())[i];

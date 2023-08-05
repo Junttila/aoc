@@ -1,16 +1,18 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     const bps = lines.map(
-      (v) =>
+      v =>
         ({
           c1: v.substring(0, v.length / 2).split(''),
           c2: v.substring(v.length / 2, v.length).split(''),
-        } as Backpack),
+        }) as Backpack
     );
 
     return bps
-      .map((v) => {
+      .map(v => {
         return itemPriority(commonItem(v));
       })
       .reduce((a, v) => a + v, 0);
@@ -20,7 +22,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
     const bps: Backpack2[] = [];
     let temp: string[] = [];
 
-    lines.forEach((v) => {
+    lines.forEach(v => {
       temp.push(v);
       if (temp.length >= 3) {
         bps.push({
@@ -55,8 +57,8 @@ interface Backpack2 {
 
 function commonItem(bp: Backpack): string {
   const itemSet = new Set<string>(bp.c1);
-  let common: string = '';
-  bp.c2.forEach((v) => {
+  let common = '';
+  bp.c2.forEach(v => {
     if (itemSet.has(v)) {
       common = v;
     }
@@ -67,8 +69,8 @@ function commonItem(bp: Backpack): string {
 function commonItem2(bp: Backpack2): string {
   const itemSet = new Set<string>(bp.c1);
   const itemSet2 = new Set<string>(bp.c3);
-  let common: string = '';
-  bp.c2.forEach((v) => {
+  let common = '';
+  bp.c2.forEach(v => {
     if (itemSet.has(v) && itemSet2.has(v)) {
       common = v;
     }

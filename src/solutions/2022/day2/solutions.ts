@@ -1,25 +1,27 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
-    return lines.map((l) => l.split(' ')).reduce((a, v) => a + gameScore(v), 0);
+    return lines.map(l => l.split(' ')).reduce((a, v) => a + gameScore(v), 0);
   },
   // Solution part 2
   (lines: string[]) => {
     return lines
-      .map((l) => l.split(' '))
-      .map((v) => [v[0], strat(v)])
+      .map(l => l.split(' '))
+      .map(v => [v[0], strat(v)])
       .reduce((a, v) => a + gameScore(v), 0);
   },
 ];
 
-const map: { [_: string]: string } = {
+const map: {[_: string]: string} = {
   X: 'A',
   Y: 'B',
   Z: 'C',
 };
 
 function strat(strat: string[]): string {
-  let move: string = '';
+  let move = '';
   switch (strat[0]) {
     case 'A':
       switch (strat[1]) {
@@ -65,8 +67,8 @@ function strat(strat: string[]): string {
 }
 
 function gameScore(game: string[]): number {
-  let resultScore: number = 0;
-  let choiceScore: number = 0;
+  let resultScore = 0;
+  let choiceScore = 0;
   // console.log(game);
 
   switch (game[1]) {

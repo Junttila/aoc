@@ -1,4 +1,6 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     return findStart(lines[0]) || 0;
@@ -9,7 +11,7 @@ const solutions: Array<(lines: string[]) => string | number> = [
   },
 ];
 
-function findStart(data: string, nrOfDiff: number = 4): number | null {
+function findStart(data: string, nrOfDiff = 4): number | null {
   let allDiff = false;
   let i = nrOfDiff - 1;
   while (!allDiff) {

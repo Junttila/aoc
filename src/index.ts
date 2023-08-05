@@ -1,28 +1,28 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
-import { filePathForJS, fileToArray } from "./solutions/scripts/fileToArray";
-import allSolutions from "./solutions/allSolutions";
-import * as fs from "fs";
-import path from "node:path";
-import fetch from "cross-fetch";
-import { env } from "process";
+import {filePathForJS, fileToArray} from './solutions/scripts/fileToArray';
+import allSolutions from './solutions/allSolutions';
+import * as fs from 'fs';
+import path = require('node:path');
+import fetch from 'cross-fetch';
+import {env} from 'process';
 
-let YEAR = "2022";
-const DAY = 11;
+const YEAR = '2022';
+const DAY = 9;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
 const EXAMPLE_FILE_NAME = `src/solutions/${YEAR}/day${DAY}/example.txt`;
 const INPUT_FILE_NAME = `src/solutions/${YEAR}/day${DAY}/input.txt`;
-const AOC_SESSION = env.AOC_SESSION || "";
+const AOC_SESSION = env.AOC_SESSION || '';
 let currentFile;
 
 try {
   currentFile = fs.readFileSync(
     path.resolve(filePathForJS(INPUT_FILE_NAME)),
-    "utf8"
+    'utf8'
   );
 } catch (e) {
   console.log("Couldn't read file, touching", INPUT_FILE_NAME);
-  fs.writeFile(INPUT_FILE_NAME, "", (a) => {
+  fs.writeFile(INPUT_FILE_NAME, '', a => {
     if (a !== null) {
       throw a;
     }
@@ -31,13 +31,13 @@ try {
 
 (async () => {
   if (!currentFile) {
-    console.log("Input file empty!");
+    console.log('Input file empty!');
     console.log(
-      "Fetching data for year",
+      'Fetching data for year',
       YEAR,
-      "day",
+      'day',
       DAY,
-      "from",
+      'from',
       AOC_INPUT_URI
     );
     const result = await fetch(AOC_INPUT_URI, {
@@ -48,7 +48,7 @@ try {
     if (result.status === 200) {
       const content = await result.text();
       if (content) {
-        fs.writeFile(INPUT_FILE_NAME, content, (a) => {
+        fs.writeFile(INPUT_FILE_NAME, content, a => {
           if (a !== null) {
             throw a;
           }
@@ -61,14 +61,14 @@ try {
   }
 
   const inputAsLines = fileToArray(INPUT_FILE_NAME);
-  if (inputAsLines.at(-1) === "") {
+  if (inputAsLines.at(-1) === '') {
     inputAsLines.pop();
   }
   const exampleAsLines = fileToArray(EXAMPLE_FILE_NAME);
   const exampleEmpty = exampleAsLines[0].length < 1;
-  console.log("Start day", DAY);
+  console.log('Start day', DAY);
   if (inputAsLines[0]?.length < 1) {
-    console.log("File empty, exiting");
+    console.log('File empty, exiting');
     return;
   }
 
@@ -82,19 +82,19 @@ try {
 
       const exampleBefore = new Date();
       const exampleResult = exampleEmpty
-        ? "Example file empty"
+        ? 'Example file empty'
         : f(exampleAsLines);
       const exampleAfter = new Date();
 
-      console.log("Solution", (i + 1).toString());
+      console.log('Solution', (i + 1).toString());
       console.log(
-        "Example result:",
-        exampleResult || "",
+        'Example result:',
+        exampleResult || '',
         `(${exampleAfter.valueOf() - exampleBefore.valueOf()}ms)`
       );
       console.log(
-        "Result:",
-        result || "",
+        'Result:',
+        result || '',
         `(${after.valueOf() - before.valueOf()}ms)`
       );
       console.log();

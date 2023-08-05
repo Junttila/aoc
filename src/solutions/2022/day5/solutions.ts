@@ -1,14 +1,16 @@
-const solutions: Array<(lines: string[]) => string> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     const nrOfStacks = Number(
       lines
-        .find((v) => v[1] === '1')
+        .find(v => v[1] === '1')
         ?.split('   ')
-        .at(-1),
+        .at(-1)
     );
-    const endOfDrawing = lines.findIndex((v) => v[1] === '1');
-    const stacks: Stack[] = Array.from({ length: nrOfStacks }, () => Array(0));
+    const endOfDrawing = lines.findIndex(v => v[1] === '1');
+    const stacks: Stack[] = Array.from({length: nrOfStacks}, () => Array(0));
     for (let line = 0; line < endOfDrawing; line++) {
       for (let sn = 0; sn < nrOfStacks; sn++) {
         const crate: Crate = lines[line][sn * 4 + 1];
@@ -22,7 +24,7 @@ const solutions: Array<(lines: string[]) => string> = [
       const move = m
         .replace(/[a-z]/g, '')
         .split('  ')
-        .map((n) => Number(n));
+        .map(n => Number(n));
       return {
         amount: move[0],
         from: move[1],
@@ -30,21 +32,21 @@ const solutions: Array<(lines: string[]) => string> = [
       };
     });
 
-    moves.forEach((m) => {
+    moves.forEach(m => {
       move(stacks, m);
     });
-    return stacks.map((s) => s.at(-1) || '').reduce((a, v) => a + v, '');
+    return stacks.map(s => s.at(-1) || '').reduce((a, v) => a + v, '');
   },
   // Solution part 2
   (lines: string[]) => {
     const nrOfStacks = Number(
       lines
-        .find((v) => v[1] === '1')
+        .find(v => v[1] === '1')
         ?.split('   ')
-        .at(-1),
+        .at(-1)
     );
-    const endOfDrawing = lines.findIndex((v) => v[1] === '1');
-    let stacks: Stack[] = Array.from({ length: nrOfStacks }, () => Array(0));
+    const endOfDrawing = lines.findIndex(v => v[1] === '1');
+    let stacks: Stack[] = Array.from({length: nrOfStacks}, () => Array(0));
     for (let line = 0; line < endOfDrawing; line++) {
       for (let sn = 0; sn < nrOfStacks; sn++) {
         const crate: Crate = lines[line][sn * 4 + 1];
@@ -58,7 +60,7 @@ const solutions: Array<(lines: string[]) => string> = [
       const move = m
         .replace(/[a-z]/g, '')
         .split('  ')
-        .map((n) => Number(n));
+        .map(n => Number(n));
       return {
         amount: move[0],
         from: move[1],
@@ -66,11 +68,11 @@ const solutions: Array<(lines: string[]) => string> = [
       };
     });
 
-    moves.forEach((m) => {
+    moves.forEach(m => {
       stacks = move2(stacks, m);
     });
 
-    return stacks.map((s) => s.at(-1) || '').reduce((a, v) => a + v, '');
+    return stacks.map(s => s.at(-1) || '').reduce((a, v) => a + v, '');
   },
 ];
 
@@ -82,13 +84,13 @@ interface Move {
   to: number;
 }
 
-function move(stacks: Stack[], { amount, from, to }: Move) {
+function move(stacks: Stack[], {amount, from, to}: Move) {
   for (; amount > 0; amount--) {
     stacks[to - 1].push(stacks[from - 1].pop() as string);
   }
 }
 
-function move2(stacks: Stack[], { amount, from, to }: Move) {
+function move2(stacks: Stack[], {amount, from, to}: Move) {
   const s = Array.from(stacks);
   const craneStack = s[from - 1].slice(-amount);
   s[to - 1] = s[to - 1].concat(craneStack);

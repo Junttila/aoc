@@ -1,30 +1,32 @@
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
-    const forest: Forest = lines.map((l) =>
-      l.split('').map((t) => Number.parseInt(t)),
+    const forest: Forest = lines.map(l =>
+      l.split('').map(t => Number.parseInt(t))
     );
     const visibilityMatrix = forest.map((l, y) =>
       l
-        .map((_t, x) => Array.from(visible(forest, { x, y })))
-        .map((v) => v.length > 0),
+        .map((_t, x) => Array.from(visible(forest, {x, y})))
+        .map(v => v.length > 0)
     );
 
     return visibilityMatrix.flat().reduce((a, v) => (v ? a + 1 : a), 0);
   },
   // Solution part 2
   (lines: string[]) => {
-    const forest: Forest = lines.map((l) =>
-      l.split('').map((t) => Number.parseInt(t)),
+    const forest: Forest = lines.map(l =>
+      l.split('').map(t => Number.parseInt(t))
     );
     const scenicMatrix = forest.map((l, y) =>
-      l.map((_t, x) => scenic(forest, { x, y })),
+      l.map((_t, x) => scenic(forest, {x, y}))
     );
     return Math.max(
       ...scenicMatrix
         .flat()
-        .map((m) => Array.from(m.values()).reduce((a, v) => a * v, 1))
-        .filter((v) => v !== 0),
+        .map(m => Array.from(m.values()).reduce((a, v) => a * v, 1))
+        .filter(v => v !== 0)
     );
   },
 ];

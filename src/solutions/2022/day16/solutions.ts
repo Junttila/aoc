@@ -1,4 +1,6 @@
-const solutions: Array<(lines: string[]) => string> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     lines.length++;

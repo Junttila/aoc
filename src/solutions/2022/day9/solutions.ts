@@ -1,13 +1,15 @@
-import { range } from "../../scripts/range";
+import {range} from '../../scripts/range';
 
-const solutions: Array<(lines: string[]) => string | number> = [
+import {Solution} from '../../../types';
+
+const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     const tailPoss = new Set<string>();
     lines.reduce(
       (a, l) => {
-        const [dir, steps] = l.split(" ") as Move;
-        const ropeMove = range(1, steps).reduce((a2, _v2) => {
+        const [dir, steps] = l.split(' ') as Move;
+        const ropeMove = range(1, steps).reduce(a2 => {
           const newRope = move(a2, dir);
           tailPoss.add(`${newRope.tail.x},${newRope.tail.y}`);
           return newRope;
@@ -16,8 +18,8 @@ const solutions: Array<(lines: string[]) => string | number> = [
         return ropeMove;
       },
       {
-        head: { x: 0, y: 0 },
-        tail: { x: 0, y: 0 },
+        head: {x: 0, y: 0},
+        tail: {x: 0, y: 0},
       } as Rope
     );
     return Array.from(tailPoss).length;
@@ -26,17 +28,17 @@ const solutions: Array<(lines: string[]) => string | number> = [
   (lines: string[]) => {
     const tailPoss = new Set<string>();
     const rope: Rope2 = {
-      head: { x: 0, y: 0 },
-      tail: Array.from({ length: 9 }, () => ({ x: 0, y: 0 })),
+      head: {x: 0, y: 0},
+      tail: Array.from({length: 9}, () => ({x: 0, y: 0})),
     };
-    const moves: Move[] = lines.map((v) => [
-      v.split(" ")[0] as Dir,
-      Number(v.split(" ")[1]),
+    const moves: Move[] = lines.map(v => [
+      v.split(' ')[0] as Dir,
+      Number(v.split(' ')[1]),
     ]);
 
     moves.reduce((a, v) => {
       const [dir, steps] = v;
-      const ropeMove = range(1, steps).reduce((a2, _v2) => {
+      const ropeMove = range(1, steps).reduce(a2 => {
         const newRope = move2(a2, dir);
         tailPoss.add(`${newRope.tail.at(-1)?.x},${newRope.tail.at(-1)?.y}`);
         return newRope;
@@ -67,36 +69,36 @@ interface Rope2 {
 }
 
 enum Dir {
-  U = "U",
-  D = "D",
-  L = "L",
-  R = "R",
+  U = 'U',
+  D = 'D',
+  L = 'L',
+  R = 'R',
 }
 
-function move({ head, tail }: Rope, dir: Dir) {
+function move({head, tail}: Rope, dir: Dir) {
   const newHead: Pos = moveHead(head, dir);
 
-  return { head: newHead, tail: follow(newHead, tail) };
+  return {head: newHead, tail: follow(newHead, tail)};
 }
 
-function move2({ head, tail }: Rope2, dir: Dir): Rope2 {
+function move2({head, tail}: Rope2, dir: Dir): Rope2 {
   const newRope = [moveHead(head, dir), ...tail];
 
   for (let i = 0; i < newRope.length - 1; i++) {
     newRope[i + 1] = follow(newRope[i], newRope[i + 1]);
   }
-  return { head: newRope[0], tail: newRope.slice(1) };
+  return {head: newRope[0], tail: newRope.slice(1)};
 }
 
 function moveHead(head: Pos, dir: Dir): Pos {
   return dir === Dir.U
-    ? { x: head.x, y: head.y - 1 }
+    ? {x: head.x, y: head.y - 1}
     : dir === Dir.D
-    ? { x: head.x, y: head.y + 1 }
+    ? {x: head.x, y: head.y + 1}
     : dir === Dir.L
-    ? { x: head.x - 1, y: head.y }
+    ? {x: head.x - 1, y: head.y}
     : dir === Dir.R
-    ? { x: head.x + 1, y: head.y }
+    ? {x: head.x + 1, y: head.y}
     : head;
 }
 

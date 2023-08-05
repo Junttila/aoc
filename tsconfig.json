@@ -1,29 +1,11 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "lib": ["es6", "es2017", "esnext.asynciterable"],
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "baseUrl": "."
+    "outDir": "build"
   },
-  "exclude": ["node_modules", "src/solutions/template"],
-  "include": ["./src/**/*.ts", "./src/commands/*.ts", "./src/**/*.txt"]
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
 }
