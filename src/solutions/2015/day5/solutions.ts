@@ -33,22 +33,16 @@ const solutions: Array<Solution> = [
       const pairs = new Set<string>();
       let twoPairs = false;
       let repeat = false;
-      let lastPair = '';
 
       w.split('').forEach((c, i, a) => {
         const currentPair = `${a[i - 1]}${c}`;
-        twoPairs = twoPairs
-          ? true
-          : currentPair === lastPair
-          ? false
-          : i >= 3
-          ? pairs.has(currentPair)
-          : false;
+        twoPairs = twoPairs ? true : pairs.has(currentPair) ? true : false;
 
         repeat = repeat ? true : i >= 2 ? c === a[i - 2] : false;
 
-        i > 0 ? pairs.add(currentPair) : null;
-        lastPair = currentPair;
+        const lastPair = a.slice(i - 2, i).join('');
+        i > 0 ? pairs.add(lastPair) : null;
+        currentPair;
       });
       const nice = twoPairs && repeat;
 
