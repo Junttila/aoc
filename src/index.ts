@@ -32,18 +32,28 @@ try {
 (async () => {
   if (!currentFile) {
     console.log("Input file empty!");
-    console.log("Fetching data for year", YEAR, "day", DAY);
+    console.log(
+      "Fetching data for year",
+      YEAR,
+      "day",
+      DAY,
+      "from",
+      AOC_INPUT_URI
+    );
     const result = await fetch(AOC_INPUT_URI, {
       headers: {
         cookie: `session=${AOC_SESSION}`,
       },
     });
     if (result.status === 200) {
-      fs.writeFile(INPUT_FILE_NAME, await result.text(), (a) => {
-        if (a !== null) {
-          throw a;
-        }
-      });
+      const content = await result.text();
+      if (content) {
+        fs.writeFile(INPUT_FILE_NAME, content, (a) => {
+          if (a !== null) {
+            throw a;
+          }
+        });
+      }
     }
     if (result.status === 404) {
       console.log(`404 returned, day ${DAY} not started?`);
