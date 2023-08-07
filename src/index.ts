@@ -76,27 +76,23 @@ try {
     .get(YEAR)
     ?.at(DAY - 1)
     ?.default.forEach((f, i) => {
-      const before = new Date();
+      const before = performance.now();
       const result = f(inputAsLines);
-      const after = new Date();
+      const after = performance.now();
 
-      const exampleBefore = new Date();
+      const exampleBefore = performance.now();
       const exampleResult = exampleEmpty
         ? 'Example file empty'
         : f(exampleAsLines);
-      const exampleAfter = new Date();
+      const exampleAfter = performance.now();
 
       console.log('Solution', (i + 1).toString());
       console.log(
         'Example result:',
         exampleResult || '',
-        `(${exampleAfter.valueOf() - exampleBefore.valueOf()}ms)`
+        `(${exampleAfter - exampleBefore}ms)`
       );
-      console.log(
-        'Result:',
-        result || '',
-        `(${after.valueOf() - before.valueOf()}ms)`
-      );
+      console.log('Result:', result || '', `(${after - before}ms)`);
       console.log();
     });
 })();
