@@ -90,9 +90,13 @@ try {
       console.log(
         'Example result:',
         exampleResult || '',
-        `(${exampleAfter - exampleBefore}ms)`
+        `(${(exampleAfter - exampleBefore).toFixed(3)}ms)`
       );
-      console.log('Result:', result || '', `(${after - before}ms)`);
+      console.log(
+        'Result:',
+        result || '',
+        `(${(after - before).toFixed(3)}ms)`
+      );
       console.log();
     });
 })();
