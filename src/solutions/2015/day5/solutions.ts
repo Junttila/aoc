@@ -28,7 +28,6 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    console.log('GO-------------------');
     const niceWords = lines.filter(w => {
       const pairs = new Set<string>();
       let twoPairs = false;
@@ -45,8 +44,6 @@ const solutions: Array<Solution> = [
         currentPair;
       });
       const nice = twoPairs && repeat;
-
-      console.log(JSON.stringify({w, twoPairs, repeat}, null, 2));
 
       return nice;
     });
