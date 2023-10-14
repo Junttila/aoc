@@ -4,7 +4,7 @@ const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
     const map = lines.map(l => l.split(''));
-    const distances = new Set<number>();
+    // const distances = new Set<number>();
 
     const start = {x: 0, y: 0};
 
@@ -18,14 +18,17 @@ const solutions: Array<Solution> = [
       }
     }
 
-    travel(start, map, distances);
+    // travel(start, map, distances);
 
-    console.log(distances);
+    // console.log(distances);
 
-    const shortest = Array.from(distances.values())
-      .sort((a, b) => b - a)
-      .at(-1);
-    return shortest || -1;
+    // const shortest = Array.from(distances.values())
+    //   .sort((a, b) => b - a)
+    //   .at(-1);
+    // return shortest || -1;
+    const result = bfs(start, map);
+    // console.log(result?.path);
+    return result?.res;
   },
   // Solution part 2
   (lines: string[]) => {
@@ -33,6 +36,46 @@ const solutions: Array<Solution> = [
     return 'no answer';
   },
 ];
+
+function bfs(start: Position, map: string[][]) {
+  const queue = [[start]];
+  const visited = new Set<string>();
+
+  while (queue.length > 0) {
+    const path = queue.shift()!;
+    const {x, y} = path.at(-1)!;
+
+    const currentHeight = height(map[y][x]);
+
+    if (!visited.has(`${x},${y}`)) {
+      visited.add(`${x},${y}`);
+
+      if (map[y][x] === 'E') {
+        console.log(path.reduce((a, p) => `${a}\n${p.x},${p.y}`, ''));
+        return {res: path.length - 1, path};
+      }
+
+      const dests: Position[] = [
+        {x: x + 1, y},
+        {x: x - 1, y},
+        {x, y: y + 1},
+        {x, y: y - 1},
+      ].filter(
+        d => d.x < map[0].length && d.x >= 0 && d.y < map.length && d.y >= 0
+      );
+
+      dests.forEach(d => {
+        const newHeight = height(map[d.y][d.x]);
+
+        if (newHeight <= currentHeight + 1) {
+          const pathCopy = Array.from(path);
+          pathCopy.push(d);
+          queue.push(pathCopy);
+        }
+      });
+    }
+  }
+}
 
 function travel(
   current: Position,
@@ -58,7 +101,7 @@ function travel(
   if (map[y][x] === 'E') {
     distances.add(distance);
     // console.log(log.reduce((a, l) => `${a}\n${l.x},${l.y}`, ''));
-    console.log(distance);
+    console.log(distance - log.length);
     return;
   }
 
@@ -71,11 +114,10 @@ function travel(
     {x: x - 1, y},
     {x, y: y + 1},
     {x, y: y - 1},
-  ]
-    .filter(
-      d => d.x < map[0].length && d.x >= 0 && d.y < map.length && d.y >= 0
-    )
-    .sort((a, b) => height(map[b.y][b.x]) - height(map[a.y][a.x]));
+  ].filter(
+    d => d.x < map[0].length && d.x >= 0 && d.y < map.length && d.y >= 0
+  );
+  // .sort((a, b) => height(map[b.y][b.x]) - height(map[a.y][a.x]));
   dests.forEach(d => {
     if (
       !newVisited.has(`${d.x},${d.y}`) &&
