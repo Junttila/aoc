@@ -26,8 +26,8 @@ function sorted(l: Packet, r: Packet): boolean | null {
 
   if (Array.isArray(r) && Array.isArray(l)) {
     for (let i = 0; i < Math.max(l.length, r.length); i++) {
-      if (l.at(i) === undefined && r.at(i) !== undefined) return true;
-      if (r.at(i) === undefined && l.at(i) !== undefined) return false;
+      if (l.at(i) === undefined) return true;
+      if (r.at(i) === undefined) return false;
       const s = sorted(l[i], r[i]);
       if (s !== null) return s;
     }
