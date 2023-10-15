@@ -12,8 +12,11 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    lines.length++;
-    return 'no answer';
+    const packets = splitArray(lines, '').flat().map(toPacket);
+    packets.push([[2]], [[6]]);
+    return packets
+      .sort((a, b) => (sorted(a, b) ? -1 : 1))
+      .reduce<number>((a, p, i) => a * (isDecoderKey(p) ? i + 1 : 1), 1);
   },
 ];
 
@@ -37,6 +40,16 @@ function sorted(l: Packet, r: Packet): boolean | null {
 
 function toPacket(p: string) {
   return JSON.parse(p) as Packet;
+}
+
+function isDecoderKey(p: Packet) {
+  return (
+    Array.isArray(p) &&
+    p.length === 1 &&
+    Array.isArray(p[0]) &&
+    p[0].length === 1 &&
+    (p[0][0] === 2 || p[0][0] === 6)
+  );
 }
 
 export default solutions;
