@@ -6,10 +6,22 @@ const solutions: Array<Solution> = [
   (lines: string[]) => {
     const uniquePaths = Array.from(new Set(lines).values());
     const map = createMap(uniquePaths);
-    lines.length++;
-    console.log(_drawCanvas(map));
 
-    return 'no answer';
+    let drawing = _drawMap(map);
+
+    dropSand(map);
+
+    let newDrawing = _drawMap(map);
+
+    let grains = 0;
+    while (newDrawing !== drawing) {
+      grains++;
+      drawing = newDrawing;
+      dropSand(map);
+      newDrawing = _drawMap(map);
+    }
+    console.log(drawing);
+    return grains;
   },
   // Solution part 2
   (lines: string[]) => {
@@ -28,19 +40,29 @@ function dropSand(map: string[][]) {
   let y = 0;
 
   let newX = x;
-  let newY = y + 1;
+  let newY = y;
 
   while (y < map.length) {
-    if (newY >= map.length || newX < 0 || newX >= map[0].length) {
-      return null;
+    newY += 1;
+    if (newY >= map.length || newX < 1 || newX >= map[0].length - 1) {
+      return map;
     }
-    if (map[newY][newX] === '#' || map[newY][newX] === 'o') {
-      newX += -1;
-    } else {
+    const [l, m, r] = [
+      map[newY][newX - 1] !== '.',
+      map[newY][newX] !== '.',
+      map[newY][newX + 1] !== '.',
+    ];
+    if (l && m && r) {
       map[y][x] = 'o';
       return map;
     }
+    if (m) {
+      newX += !l ? -1 : !r ? 1 : 0;
+    }
+    x = newX;
+    y = newY;
   }
+  return map;
 }
 
 function createMap(input: string[]) {
@@ -94,7 +116,7 @@ function createMap(input: string[]) {
   return canvas;
 }
 
-function _drawCanvas(canvas: string[][]) {
+function _drawMap(canvas: string[][]) {
   return canvas.map(l => l.join('')).join('\n');
 }
 
