@@ -171,8 +171,4 @@ function createMap2(input: string[]) {
   return canvas;
 }
 
-function _drawMap(canvas: string[][]) {
-  return canvas.map(l => l.join('')).join('\n');
-}
-
 export default solutions;
