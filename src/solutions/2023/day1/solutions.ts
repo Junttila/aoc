@@ -18,7 +18,7 @@ const solutions: Array<Solution> = [
           (s => `${s.at(0)}${s.at(-1)}`)(
             Array.from(
               l.matchAll(
-                new RegExp(`(?=(\\d|${Object.keys(numbers).join('|')}))`, 'g')
+                RegExp(`(?=(\\d|${Object.keys(numbers).join('|')}))`, 'g')
               )
             )
               .flat()
