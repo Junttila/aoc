@@ -1,5 +1,6 @@
 import {Solution} from '../../../types';
 import {setIntersect} from '../../scripts/setIntersect';
+import {mapIter} from '../../scripts/mapIter';
 
 const solutions: Array<Solution> = [
   // Solution part 1
@@ -20,10 +21,10 @@ const solutions: Array<Solution> = [
       const [winning, my] = l
         .split(':')[1]
         .split('|')
-        .map(ns => new Set<number>([...ns.matchAll(/\d+/g)].map(Number)));
+        .map(ns => new Set<string>(mapIter(ns.matchAll(/\d+/g), n => n[0])));
       const intersection = setIntersect(winning, my);
       for (let j = 1; j <= intersection.size; j++) {
-        copies[j + i] = copies[j + i] + copies[i];
+        copies[i + j] += copies[i];
       }
       return acc + copies[i];
     }, 0);
