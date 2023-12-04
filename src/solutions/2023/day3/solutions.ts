@@ -55,7 +55,6 @@ const solutions: Array<Solution> = [
           y >= n.start.y - 1 &&
           y <= n.start.y + 1
       );
-      // console.log(adjNumbers);
 
       return (
         acc +
@@ -89,13 +88,6 @@ function surroundingIndices(start: Index, length: number, bounds: Index) {
 interface PartNumber {
   value: string;
   start: Index;
-  symbol?: Symbol;
-}
-
-interface Symbol {
-  value: string;
-  x: number;
-  y: number;
 }
 
 interface Index {
