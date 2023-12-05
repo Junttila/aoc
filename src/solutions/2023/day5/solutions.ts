@@ -27,12 +27,13 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    const result = splitArray(lines, '');
-    const seedRanges: Range[] = [...result[0][0].matchAll(/(\d+) (\d+)/g)].map(
-      m => ({from: Number(m[1]), to: Number(m[1]) + Number(m[2])})
-    );
+    const seedsAndMaps = splitArray(lines, '');
 
-    const maps: FarmMap[] = result.slice(1).map(m => {
+    const seedRanges: Range[] = [
+      ...seedsAndMaps[0][0].matchAll(/(\d+) (\d+)/g),
+    ].map(m => ({from: Number(m[1]), to: Number(m[1]) + Number(m[2])}));
+
+    const maps: FarmMap[] = seedsAndMaps.slice(1).map(m => {
       const [_, sourceCat, destCat] = [
         ...(m[0].match(/(\w+)-to-(\w+)/) || []),
       ] as Category[];
@@ -44,6 +45,7 @@ const solutions: Array<Solution> = [
       });
       return {sourceCat, destCat, entries};
     });
+
     const finishedRanges = maps.reduce(
       (acc, m) => acc.map(r => mapRange(m, r)).flat(),
       seedRanges
@@ -75,24 +77,29 @@ function mapRange(map: FarmMap, range: Range): Range[] {
       to: e.destStart + e.len,
     },
   }));
+
   const newRanges: Range[] = [];
   let start = range.from;
 
   const applicableMaps = betterMaps
     .filter(m => m.src.from <= range.to && m.src.to > range.from)
     .sort((a, b) => a.src.from - b.src.from);
+
   applicableMaps.forEach(e => {
     if (start < e.src.from) {
       newRanges.push({from: start, to: e.src.from});
       start = newRanges.at(-1)!.to;
     }
+
     const translation = e.dest.from - e.src.from;
     newRanges.push({
       from: start + translation,
       to: Math.min(e.dest.to, range.to + translation),
     });
+
     start = Math.min(range.to, e.src.to);
   });
+
   if (start < range.to) {
     newRanges.push({from: start, to: range.to});
   }
