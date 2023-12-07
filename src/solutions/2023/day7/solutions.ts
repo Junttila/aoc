@@ -76,15 +76,13 @@ function handValue2(hand: Hand) {
     return acc;
   }, new Map<string, number>());
   const jokers = cardMap.get('J') || 0;
-  const cardMapNoJokers = new Map(cardMap);
-  cardMapNoJokers.delete('J');
-  const maxValue = 6;
-  // const cardAmounts = new Set(cardMap.values());
-  const cardAmountsNoJoker = new Set(cardMapNoJokers.values());
-
   if (!jokers) {
     return handValue(hand);
   }
+  const cardMapNoJokers = new Map(cardMap);
+  cardMapNoJokers.delete('J');
+  const maxValue = 6;
+  const cardAmountsNoJoker = new Set(cardMapNoJokers.values());
 
   if (jokers >= 4) {
     return maxValue;
