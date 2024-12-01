@@ -11,13 +11,16 @@ pub fn main() {
       case selected {
         Ok(x) ->
           case x() {
-            Ok(y) -> io.println(y)
+            [sol1, sol2] ->
+              io.println(
+                "Solution part 1: " <> sol1 <> "\nSolution part 2: " <> sol2,
+              )
             _ -> io.println("no solution found")
           }
         _ -> io.println("no solution found")
       }
     }
-    _ -> io.println("Usage: vars get <name>")
+    _ -> io.println("Usage: aoc <year> <day>")
   }
   0
 }
