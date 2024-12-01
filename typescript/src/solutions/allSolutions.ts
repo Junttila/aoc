@@ -1,8 +1,10 @@
 import {solutions as solutions2022} from './2022/solutions';
 import {solutions as solutions2023} from './2023/solutions';
 import {solutions as solutions2015} from './2015/solutions';
+import {solutions as solutions2024} from './2024/solutions';
 
 const solutionsObject = {
+  '2024': solutions2024,
   '2023': solutions2023,
   '2022': solutions2022,
   '2015': solutions2015,
