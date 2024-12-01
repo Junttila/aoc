@@ -1,6 +1,5 @@
 import gleam/dict
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/string
 import simplifile
@@ -45,7 +44,7 @@ pub fn sol() -> List(String) {
     })
 
   let sol2 =
-    list.map2(left, right, fn(l, r) {
+    list.map(left, fn(l) {
       l
       * case appearances |> dict.get(l) {
         Ok(a) -> a
@@ -58,7 +57,7 @@ pub fn sol() -> List(String) {
   [sol1, sol2]
 }
 
-fn print_list(l: List(String)) {
+pub fn print_list(l: List(String)) {
   let assert [first, ..rest] = l
   "[\n"
   <> list.fold(rest, "\t" <> first <> "\n", fn(acc, str) {
