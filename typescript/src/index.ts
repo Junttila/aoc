@@ -7,8 +7,8 @@ import path = require('node:path');
 import fetch from 'cross-fetch';
 import {env} from 'process';
 
-const YEAR = '2024';
-const DAY = 5;
+const YEAR = '2025';
+const DAY = 1;
 const AOC_INPUT_URI = `https://adventofcode.com/${YEAR}/day/${DAY}/input`;
 const EXAMPLE_FILE_NAME = `src/solutions/${YEAR}/day${DAY}/example.txt`;
 const INPUT_FILE_NAME = `src/solutions/${YEAR}/day${DAY}/input.txt`;
