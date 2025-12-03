@@ -3,23 +3,9 @@ import {Solution} from '../../../types';
 const solutions: Array<Solution> = [
   // Solution part 1
   (lines: string[]) => {
-    console.log('-'.repeat(10));
     const res = lines.reduce((acc, l) => {
       const digits = l.split('').map(Number);
-      const firstLargestDigit = digits.slice(0, -1).reduce(
-        (acc2, d, i) => {
-          if (d > acc2.digit) {
-            acc2.digit = d;
-            acc2.i = i;
-          }
-          return acc2;
-        },
-        {digit: 0, i: -1}
-      );
-
-      const secondDigit = Math.max(...digits.slice(firstLargestDigit.i + 1));
-
-      const joltage = Number(`${firstLargestDigit.digit}${secondDigit}`);
+      const joltage = calculateJoltage(digits, 2, []);
       acc += joltage;
       return acc;
     }, 0);
@@ -27,7 +13,6 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    console.log('-'.repeat(10));
     const res = lines.reduce((acc, l) => {
       const digits = l.split('').map(Number);
       const joltage = calculateJoltage(digits, 12, []);
@@ -38,11 +23,11 @@ const solutions: Array<Solution> = [
   },
 ];
 
-function calculateJoltage(
+const calculateJoltage = (
   bank: number[],
   batteryCount: number,
   turnedOnBatteries: number[]
-) {
+) => {
   if (batteryCount < 1 || bank.length < 1)
     return Number(turnedOnBatteries.join(''));
   if (bank.length === 1) {
@@ -68,6 +53,6 @@ function calculateJoltage(
     batteryCount - 1,
     turnedOnBatteries
   );
-}
+};
 
 export default solutions;
