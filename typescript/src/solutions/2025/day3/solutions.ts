@@ -27,7 +27,7 @@ const calculateJoltage = (
   bank: number[],
   batteryCount: number,
   turnedOnBatteries: number[]
-) => {
+): number => {
   if (batteryCount < 1 || bank.length < 1)
     return Number(turnedOnBatteries.join(''));
   if (bank.length === 1) {
