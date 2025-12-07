@@ -22,8 +22,32 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    lines.length++;
-    return 'no answer';
+    let map = lines.map(l => l.split(''));
+    const mapSize = {x: lines[0].length, y: lines.length};
+    let accessibleRolls = Number.MAX_SAFE_INTEGER;
+    const newMap = lines.map(l => l.split(''));
+    let removedRolls = 0;
+
+    while (accessibleRolls > 0) {
+      accessibleRolls = 0;
+      for (let x = 0; x < lines[0].length; x++) {
+        for (let y = 0; y < lines.length; y++) {
+          if (map[y][x] !== '@') continue;
+          const positionsToSearch = adjacentPositions({x, y}, mapSize);
+          const adjacentRolls = positionsToSearch.reduce(
+            (acc, p) => acc + (map[p.y][p.x] === '@' ? 1 : 0),
+            0
+          );
+          if (adjacentRolls < 4) {
+            accessibleRolls += 1;
+            newMap[y][x] = '.';
+            removedRolls++;
+          }
+        }
+      }
+      map = newMap;
+    }
+    return removedRolls;
   },
 ];
 
