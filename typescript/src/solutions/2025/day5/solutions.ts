@@ -28,15 +28,9 @@ const solutions: Array<Solution> = [
 
     let i = 0;
     while (i < freshRanges.length) {
-      const otherRanges = freshRanges.filter((_, i2) => i2 > i);
-
-      const firstMerge = otherRanges.findIndex(r =>
-        mergeRange(r, freshRanges[i])
-      );
-      if (firstMerge > -1) {
-        const mergeIndex = firstMerge + i + 1;
-        freshRanges[i] = mergeRange(otherRanges[firstMerge], freshRanges[i])!;
-        freshRanges.splice(mergeIndex, 1);
+      if (freshRanges[i + 1] && freshRanges[i + 1].from <= freshRanges[i].to) {
+        freshRanges[i].to = Math.max(freshRanges[i].to, freshRanges[i + 1].to);
+        freshRanges.splice(i + 1, 1);
         continue;
       }
 
@@ -48,30 +42,5 @@ const solutions: Array<Solution> = [
     return res;
   },
 ];
-
-function mergeRange(
-  a: {from: number; to: number},
-  b: {from: number; to: number}
-) {
-  if (
-    (a.to <= b.to && a.from >= b.from) ||
-    (b.to <= a.to && b.from >= a.from)
-  ) {
-    return a.to <= b.to ? b : a;
-  }
-  if (
-    (a.from < b.from && a.to < b.from) ||
-    (b.from < a.from && b.to < a.from)
-  ) {
-    return null;
-  }
-  if (a.to > b.to) {
-    return {from: b.from, to: a.to};
-  }
-  if (a.from < b.from) {
-    return {from: a.from, to: b.to};
-  }
-  return null;
-}
 
 export default solutions;
