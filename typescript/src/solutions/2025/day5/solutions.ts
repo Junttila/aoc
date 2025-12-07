@@ -19,33 +19,37 @@ const solutions: Array<Solution> = [
   },
   // Solution part 2
   (lines: string[]) => {
-    const freshRanges = splitArray(lines, '')[0].map(r => {
-      const [from, to] = r.split('-').map(Number);
-      return {from, to};
-    });
-    // console.log({freshRanges});
+    const freshRanges = splitArray(lines, '')[0]
+      .map(r => {
+        const [from, to] = r.split('-').map(Number);
+        return {from, to};
+      })
+      .sort((r1, r2) => r1.from - r2.from);
 
-    const res = freshRanges.reduce((acc, r, i) => {
-      const otherRanges = freshRanges.filter((_, i2) => i2 < i);
-      const rangeSize = r.to - r.from + 1;
-      const overlaps = otherRanges.reduce(
-        (acc2, r2) => acc2 + rangeOverlap(r, r2),
-        0
+    let i = 0;
+    while (i < freshRanges.length) {
+      const otherRanges = freshRanges.filter((_, i2) => i2 > i);
+
+      const firstMerge = otherRanges.findIndex(r =>
+        mergeRange(r, freshRanges[i])
       );
-      console.log({
-        r,
-        rangeSize,
-        overlaps,
-        newAcc: acc + rangeSize - Math.min(overlaps, rangeSize),
-      });
-      return acc + rangeSize - Math.min(overlaps, rangeSize);
-    }, 0);
+      if (firstMerge > -1) {
+        const mergeIndex = firstMerge + i + 1;
+        freshRanges[i] = mergeRange(otherRanges[firstMerge], freshRanges[i])!;
+        freshRanges.splice(mergeIndex, 1);
+        continue;
+      }
+
+      i++;
+    }
+
+    const res = freshRanges.reduce((acc, r) => acc + r.to - r.from + 1, 0);
 
     return res;
   },
 ];
 
-function rangeOverlap(
+function mergeRange(
   a: {from: number; to: number},
   b: {from: number; to: number}
 ) {
@@ -53,26 +57,21 @@ function rangeOverlap(
     (a.to <= b.to && a.from >= b.from) ||
     (b.to <= a.to && b.from >= a.from)
   ) {
-    console.log('complete overlap', {a, b});
-    return Math.min(a.to - a.from, b.to - b.from) + 1;
+    return a.to <= b.to ? b : a;
   }
   if (
     (a.from < b.from && a.to < b.from) ||
     (b.from < a.from && b.to < a.from)
   ) {
-    console.log('no overlap', {a, b});
-    return 0;
+    return null;
   }
   if (a.to > b.to) {
-    console.log('partial overlap 1', {a, b});
-    return b.to - a.from + 1;
+    return {from: b.from, to: a.to};
   }
   if (a.from < b.from) {
-    console.log('partial overlap 2', {a, b});
-    return a.to - b.from + 1;
+    return {from: a.from, to: b.to};
   }
-  console.log('null case');
-  return 0;
+  return null;
 }
 
 export default solutions;
